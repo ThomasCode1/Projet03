@@ -209,8 +209,7 @@ color: #1D6154;
 font-family: 'Syne';
 }
 
-.filters button:hover {
+.filters .selected-filter {
 color:white;
 background-color: #1D6154;
-
 }
