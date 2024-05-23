@@ -86,12 +86,25 @@ login.addEventListener("click", function () {
     lastMenuClicked = login
 })
 
-const loginForm = document.querySelector('.login-form');
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
-});
-
 const contactForm = document.querySelector('#contact form');
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
-});
+contactForm.addEventListener("submit", (event) => {
+    event.preventDefault()
+})
+
+
+
+const loginForm = document.querySelector('.login-form');
+let loginResult
+loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault()
+    let email = document.getElementById("email-login")
+    let password = document.getElementById("password")
+    console.log(email.value)
+    reponse = await fetch("http://localhost:5678/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({"email": email.value,"password": password.value})
+    })
+    loginResult = await reponse.json()
+    console.log(loginResult)
+})
