@@ -55,28 +55,40 @@ let contact = document.getElementById("contact-button")
 let login = document.getElementById("login-button")
 let lastMenuClicked = projets
 document.getElementById("login-page").style.display = 'none';
-projets.addEventListener("click", function () {
+
+function displayHome() {
     document.getElementById("introduction").style.display = 'flex';
     document.getElementById("portfolio").style.display = 'block';
     document.getElementById("contact").style.display = 'block';
     document.getElementById("login-page").style.display = 'none';
+}
+
+projets.addEventListener("click", function () {
+    displayHome()
     document.getElementById("portfolio").scrollIntoView()
     lastMenuClicked.classList.remove("selected-menu")
     projets.classList.add("selected-menu")
     lastMenuClicked = projets
 })
 contact.addEventListener("click", function () {
-    document.getElementById("introduction").style.display = 'flex';
-    document.getElementById("portfolio").style.display = 'block';
-    document.getElementById("contact").style.display = 'block';
-    document.getElementById("login-page").style.display = 'none';
+    displayHome()
     document.getElementById("contact").scrollIntoView()
     lastMenuClicked.classList.remove("selected-menu")
     contact.classList.add("selected-menu")
     lastMenuClicked = contact
 
 })
+
+let bearer = null
 login.addEventListener("click", function () {
+    if(bearer) {
+        bearer = null
+        login.innerText="login"
+        filters.style.display = 'flex';
+        document.querySelector(".mode-edition").style.display = 'none'
+        document.querySelector(".modifier").style.display = 'none'
+        document.querySelector('.title-modifier').style.marginBottom = '0px'
+    }
     document.getElementById("introduction").style.display = 'none';
     document.getElementById("portfolio").style.display = 'none';
     document.getElementById("contact").style.display = 'none';
@@ -99,12 +111,27 @@ loginForm.addEventListener("submit", async (event) => {
     event.preventDefault()
     let email = document.getElementById("email-login")
     let password = document.getElementById("password")
-    console.log(email.value)
     reponse = await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({"email": email.value,"password": password.value})
     })
     loginResult = await reponse.json()
-    console.log(loginResult)
+    let badLogin = document.querySelector(".badLogin")
+        if(Object.keys(loginResult).length === 2) {
+            bearer = loginResult.token
+            badLogin.innerText = ""
+            displayHome()
+            document.querySelector('.mode-edition').style.display = 'flex'
+            document.querySelector('.modifier').style.display = 'block'
+            document.querySelector('.title-modifier').style.marginBottom = '110px'
+            document.querySelector("body").scrollIntoView()
+            lastMenuClicked.classList.remove("selected-menu")
+            projets.classList.add("selected-menu")
+            lastMenuClicked = projets
+            login.innerText="logout"
+            filters.style.display = 'none'
+        } else {
+            badLogin.innerText = "Erreur dans l’identifiant ou le mot de passe"
+        }
 })

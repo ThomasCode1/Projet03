@@ -121,9 +121,10 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+.title-modifier {
+	display:flex;
+	justify-content: center;
+	align-items: center;
 }
 .gallery {
 	width: 100%;
@@ -261,4 +262,44 @@ left:-172px;
 	text-align:center;
 	color:black;
 	font-weight: 600;
+}
+
+.badLogin {
+text-align: center;
+}
+
+.mode-edition {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: calc(100vw - 20px);
+ 	margin-left: calc(-50vw + 50% + 8px);
+	height: 60px;
+	background-color: black;
+	color: white;
+}
+
+.mode-edition i {
+position:relative;
+left:-14px;
+}
+
+.title-modifier {
+	display: flex;
+}
+
+.modifier {
+	display:none;
+	margin-left:40px;
+}
+
+.modifier i {
+	position: relative;
+	left:-11px;
+}
+
+.modifier a {
+color:black;
+text-decoration: none;
 }
