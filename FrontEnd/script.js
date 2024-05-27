@@ -135,3 +135,21 @@ loginForm.addEventListener("submit", async (event) => {
             badLogin.innerText = "Erreur dans l’identifiant ou le mot de passe"
         }
 })
+
+var modal = document.querySelector(".modal")
+var buttonModal = document.querySelector(".modifier")
+var close = document.querySelector(".close")
+
+buttonModal.onclick = function() {
+  modal.style.display = "block"
+}
+
+close.onclick = function() {
+  modal.style.display = "none"
+}
+
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none"
+  }
+}
