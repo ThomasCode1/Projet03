@@ -96,7 +96,7 @@ login.addEventListener("click", function () {
         document.querySelector(".mode-edition").style.display = 'none'
         document.querySelector(".modifier").style.display = 'none'
         document.querySelector('.title-modifier').style.marginBottom = '0px'
-    }
+    } else {
     document.getElementById("introduction").style.display = 'none';
     document.getElementById("portfolio").style.display = 'none';
     document.getElementById("contact").style.display = 'none';
@@ -104,6 +104,7 @@ login.addEventListener("click", function () {
     lastMenuClicked.classList.remove("selected-menu")
     login.classList.add("selected-menu")
     lastMenuClicked = login
+    }
 })
 
 const contactForm = document.querySelector('#contact form');
@@ -145,7 +146,8 @@ loginForm.addEventListener("submit", async (event) => {
     })
     loginResult = await reponse.json()
         if(Object.keys(loginResult).length === 2) {
-           successLogin(loginResult.token)
+            token = loginResult.token
+           successLogin(token)
         } else {
             badLogin.innerText = "Erreur dans l’identifiant ou le mot de passe"
         }
@@ -157,6 +159,7 @@ loginForm.addEventListener("submit", async (event) => {
 let modal = document.querySelector(".modal")
 let buttonModal = document.querySelector(".modifier")
 let close = document.querySelector(".close")
+let closeTwo = document.querySelector(".close-two")
 let worksModal = document.querySelector(".works-modale")
 
 buttonModal.onclick = function() {
@@ -164,8 +167,12 @@ buttonModal.onclick = function() {
 }
 
 close.onclick = function() {
-  modal.style.display = "none"
-}
+    modal.style.display = "none"
+  }
+
+  closeTwo.onclick = function() {
+    modal.style.display = "none"
+  }
 
 window.onclick = function(event) {
   if (event.target === modal) {
@@ -200,3 +207,13 @@ for(const work of works) {
 }
 
 genererWorksModal()
+
+document.querySelector(".button-ajout-photo").addEventListener("click", (event) => {
+    document.querySelector(".ajout-photo").style.display = 'flex'
+    document.querySelector(".modal-content").style.display = 'none'
+    })
+
+document.querySelector(".retour-modale").addEventListener("click", (event) => {
+    document.querySelector(".ajout-photo").style.display = 'none'
+    document.querySelector(".modal-content").style.display = 'flex'
+})

@@ -326,7 +326,7 @@ text-decoration: none;
 	padding: 30px;
 	border: 1px solid #888;
 	width: 630px;
-	height:72%;
+	height:80%;
 	border-radius: 10px;
   }
 
@@ -335,14 +335,14 @@ text-decoration: none;
 	width:30px;
 	left:610px;
 	top:-10px;
-	color: #aaaaaa;
+	color: #000;
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
   }
   
   .close:hover, .close:focus {
-	color: #000;
+	color: #aaaaaa;
 	text-decoration: none;
 	cursor: pointer;
   }
@@ -379,4 +379,73 @@ object-fit: cover;
 position: relative;
 top:-100px;
 left:59px;
+  }
+
+  .modal-content hr {
+	width:420px;
+	margin-left:110px;
+  }
+
+  .modal-content button {
+	width:237px;
+	height:36px;
+	margin-left:197px;
+	border-radius: 55px;
+	margin-top:30px;
+	font-family: 'Syne';
+	border:none;
+	color:white;
+	background-color: #1D6154;
+  }
+
+  .modal-content button:hover {
+	background-color: #329381;
+  }
+
+  .ajout-photo {
+	display:none;
+	flex-direction: column;
+	overflow: auto;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 30px;
+	border: 1px solid #888;
+	width: 630px;
+	height:80%;
+	border-radius: 10px;
+  }
+
+
+  .ajout-photo .close-two {
+	position:relative;
+	width:30px;
+	left:610px;
+	top:-32px;
+	color: #000;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+  }
+  
+  .close-two:hover, .close-two:focus {
+	color: #aaaaaa;
+	text-decoration: none;
+	cursor: pointer;
+  }
+
+  .retour-modale {
+	font-size: 1.5em;
+  }
+
+  .retour-modale:hover {
+	color: #929292;
+	cursor: pointer;
+  }
+
+  .ajout-photo p {
+	display:block;
+	position:relative;
+	top:-20px;
+	text-align: center;
+	font-size: 2em;
   }
