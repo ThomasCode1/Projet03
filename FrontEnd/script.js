@@ -1,3 +1,7 @@
+let token = localStorage.getItem("token")
+
+/************************************************************************Affichage des works*****************************************************/
+
 function genererWorks(works) {
     let gallery = document.querySelector(".gallery")
     gallery.innerHTML= ""
@@ -15,7 +19,7 @@ function genererWorks(works) {
     }
 
 let reponse = await fetch("http://localhost:5678/api/works")
-const works = await reponse.json()
+let works = await reponse.json()
 
 genererWorks(works)
 
@@ -50,6 +54,10 @@ for(let category of categories) {
     filters.appendChild(button)
 }
 
+
+/***************************************************************************Formulaire de login ********************************/
+
+
 let projets = document.getElementById("projets-button")
 let contact = document.getElementById("contact-button")
 let login = document.getElementById("login-button")
@@ -79,10 +87,10 @@ contact.addEventListener("click", function () {
 
 })
 
-let bearer = null
 login.addEventListener("click", function () {
-    if(bearer) {
-        bearer = null
+    if(token) {
+        token = null
+        localStorage.removeItem("token")
         login.innerText="login"
         filters.style.display = 'flex';
         document.querySelector(".mode-edition").style.display = 'none'
@@ -103,42 +111,53 @@ contactForm.addEventListener("submit", (event) => {
     event.preventDefault()
 })
 
-
-
+let badLogin = document.querySelector(".badLogin")
+let email = document.getElementById("email-login")
+let password = document.getElementById("password")
 const loginForm = document.querySelector('.login-form');
+
+function successLogin(token) {
+    localStorage.setItem("token", token)
+    badLogin.innerText = ""
+    displayHome()
+    document.querySelector('.mode-edition').style.display = 'flex'
+    document.querySelector('.modifier').style.display = 'block'
+    document.querySelector('.title-modifier').style.marginBottom = '110px'
+    document.querySelector("body").scrollIntoView()
+    lastMenuClicked.classList.remove("selected-menu")
+    projets.classList.add("selected-menu")
+    lastMenuClicked = projets
+    login.innerText="logout"
+    filters.style.display = 'none'
+}
+
+if(token) {
+    successLogin(token)
+}
+
 let loginResult
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault()
-    let email = document.getElementById("email-login")
-    let password = document.getElementById("password")
     reponse = await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({"email": email.value,"password": password.value})
     })
     loginResult = await reponse.json()
-    let badLogin = document.querySelector(".badLogin")
         if(Object.keys(loginResult).length === 2) {
-            bearer = loginResult.token
-            badLogin.innerText = ""
-            displayHome()
-            document.querySelector('.mode-edition').style.display = 'flex'
-            document.querySelector('.modifier').style.display = 'block'
-            document.querySelector('.title-modifier').style.marginBottom = '110px'
-            document.querySelector("body").scrollIntoView()
-            lastMenuClicked.classList.remove("selected-menu")
-            projets.classList.add("selected-menu")
-            lastMenuClicked = projets
-            login.innerText="logout"
-            filters.style.display = 'none'
+           successLogin(loginResult.token)
         } else {
             badLogin.innerText = "Erreur dans l’identifiant ou le mot de passe"
         }
 })
 
-var modal = document.querySelector(".modal")
-var buttonModal = document.querySelector(".modifier")
-var close = document.querySelector(".close")
+
+/*****************************************************************************************************Modale *************************************/
+
+let modal = document.querySelector(".modal")
+let buttonModal = document.querySelector(".modifier")
+let close = document.querySelector(".close")
+let worksModal = document.querySelector(".works-modale")
 
 buttonModal.onclick = function() {
   modal.style.display = "block"
@@ -153,3 +172,31 @@ window.onclick = function(event) {
     modal.style.display = "none"
   }
 }
+
+function genererWorksModal() {
+for(const work of works) {
+    let imageWork = document.createElement("img");
+    imageWork.src = work.imageUrl
+    imageWork.alt = work.title
+    let figure = document.createElement("figure")
+    figure.appendChild(imageWork)
+    let buttonRemove = document.createElement("div")
+    buttonRemove.innerHTML = '<i class="fa-solid fa-xmark"></i>'
+     buttonRemove.addEventListener("click", async (event) => {
+        reponse = await fetch(`http://localhost:5678/api/works/${work.id}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` }
+        })
+        worksModal.innerHTML = ""
+        reponse = await fetch("http://localhost:5678/api/works")
+        works = await reponse.json()
+        genererWorks(works)
+        genererWorksModal()
+    })
+    buttonRemove.classList.add("button-remove")
+    figure.appendChild(buttonRemove)
+    worksModal.appendChild(figure)
+}
+}
+
+genererWorksModal()
