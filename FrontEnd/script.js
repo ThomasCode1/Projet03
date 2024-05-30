@@ -24,6 +24,7 @@ let works = await reponse.json()
 genererWorks(works)
 
 let filters = document.querySelector(".filters")
+let optionsAjoutPhoto = document.getElementById("categorieWork")
 reponse = await fetch("http://localhost:5678/api/categories")
 let categories = await reponse.json()
 categories.unshift({
@@ -52,6 +53,12 @@ for(let category of categories) {
     }
     button.addEventListener("click", onFilterClick.bind(button, category))
     filters.appendChild(button)
+if(category.id != 0) {
+    let option = document.createElement("option")
+    option.innerText = category.name
+    option.value = category.id
+    optionsAjoutPhoto.appendChild(option)
+}
 }
 
 
