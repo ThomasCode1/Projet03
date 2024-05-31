@@ -478,8 +478,21 @@ margin-left: 100px;
 	display:block;
 	width:173px;
 	height: 36px;
-	border-radius: 10px;
+	border-radius: 20px;
 	background-color: #d0d4dc;
+  }
+
+  .button-photo {
+	border-radius:20px;
+	border:none;
+  }
+
+  .imageWorkZone label p {
+	display: block;
+	position: relative;
+	top:10px;
+	font-size: 1.1em;
+	color:#306685;
   }
 
   .imageWorkZone {

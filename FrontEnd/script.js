@@ -224,3 +224,22 @@ document.querySelector(".retour-modale").addEventListener("click", (event) => {
     document.querySelector(".ajout-photo").style.display = 'none'
     document.querySelector(".modal-content").style.display = 'flex'
 })
+
+
+let titreWork = document.getElementById("titreWork")
+let categorieWork = document.getElementById("categorieWork")
+let buttonValider = document.querySelector(".button-valider")
+buttonValider.addEventListener("click", async (event) => {
+    let fetchImage =  await fetch(document.getElementById("imageWork").value)
+    let binaryImage = await fetchImage.blob()
+    reponse = await fetch(`http://localhost:5678/api/works/${work.id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({"image": binaryImage,"title": titreWork.value, "category": categorieWork.value})
+    })
+    worksModal.innerHTML = ""
+    reponse = await fetch("http://localhost:5678/api/works")
+    works = await reponse.json()
+    genererWorks(works)
+    genererWorksModal()
+})
