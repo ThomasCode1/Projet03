@@ -226,17 +226,26 @@ document.querySelector(".retour-modale").addEventListener("click", (event) => {
 })
 
 
+
 let titreWork = document.getElementById("titreWork")
 let categorieWork = document.getElementById("categorieWork")
-let buttonValider = document.querySelector(".button-valider")
-buttonValider.addEventListener("click", async (event) => {
-    let fetchImage =  await fetch(document.getElementById("imageWork").value)
-    let binaryImage = await fetchImage.blob()
-    reponse = await fetch(`http://localhost:5678/api/works/${work.id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({"image": binaryImage,"title": titreWork.value, "category": categorieWork.value})
+let imageWork = document.getElementById("imageWork")
+let messageUpload = document.querySelector(".message-upload")
+const formWorkUpload = document.querySelector(".upload-form")
+formWorkUpload.addEventListener("submit", async (event) => {
+    event.preventDefault()
+    if((titreWork.value === "") || (categorieWork.value === null) || (imageWork.value === "")) {
+messageUpload.innerText = "Tous les champs doivent être remplis"
+    } else {
+    const formData = new FormData(event.target)
+    reponse = await fetch(`http://localhost:5678/api/works`, {
+        method: "POST",
+        headers: {'Authorization': `Bearer ${token}` },
+        body: formData
     })
+    }
+    let result = await reponse.json()
+    messageUpload.innerText = "La photo a bien été envoyée!"
     worksModal.innerHTML = ""
     reponse = await fetch("http://localhost:5678/api/works")
     works = await reponse.json()

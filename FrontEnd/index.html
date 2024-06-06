@@ -40,17 +40,18 @@
 		<div class="retour-modale"><i class="fa-solid fa-arrow-left"></i></div>
 		<div class="close-two">&times;</div>
 		<p>Ajout photo</p>
-		<form class="upload-form"></form>
-		<div class="imageWorkZone"><i class="fa-regular fa-image"></i><button class="button-photo"><label for="imageWork"><p>+ Ajouter photo</p></label></button>
-			<input type="file" id="imageWork" name="imageWork" accept="image/png, image/jpeg"/><p>jpg, png : 4mo max</p></div>
+		<form class="upload-form">
+		<div class="imageWorkZone"><i class="fa-regular fa-image"></i><div class="button-photo"><label for="imageWork"><p>+ Ajouter photo</p></label></div>
+			<input type="file" id="imageWork" name="image" accept="image/png, image/jpeg"/><p>jpg, png : 4mo max</p></div>
 		<div class="options-ajout">
 		<label for="titreWork">Titre</label>
-		<input type="text" id="titreWork" name="titreWork"/>
+		<input type="text" id="titreWork" name="title"/>
 		<label for="categorieWork">Catégorie</label>
-		<select id="categorieWork" name="categorieWork">
+		<select id="categorieWork" name="category">
 		  </select>
 		</div>
 		<hr>
+		<div class="message-upload"></div>
 		  <button class="button-valider">Valider</button>
 	</form>
 	</div>
